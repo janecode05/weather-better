@@ -1,0 +1,108 @@
+
+.dashboard {
+  padding: 28px;
+  color: #24332e;
+}
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.welcome h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.welcome p {
+  color: #718078;
+}
+
+.location {
+  background: #edf5ef;
+  padding: 10px 16px;
+  border-radius: 20px;
+}
+
+.aqi-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 18px;
+  background: #e7f3eb;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.aqi-value {
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  padding: 18px 28px;
+}
+
+.aqi-value strong {
+  display: block;
+  font-size: 42px;
+}
+
+.aqi-value span {
+  color: #a36b20;
+  font-weight: bold;
+}
+
+.section-title {
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-card,
+.recommendation-card {
+  padding: 22px;
+  border: 1px solid #e5ebe7;
+  border-radius: 16px;
+  background: white;
+}
+
+.stat-card h3 {
+  font-size: 25px;
+  margin-bottom: 6px;
+}
+
+.stat-card p,
+.recommendation-card p {
+  color: #718078;
+}
+
+.recommendation-card {
+  margin-top: 24px;
+  background: #fff9e9;
+  border-color: #f2e8c9;
+}
+
+@media (max-width: 700px) {
+  .welcome,
+  .aqi-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

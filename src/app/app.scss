@@ -1,0 +1,131 @@
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #ffffff;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e7eeeb;
+}
+
+.brand {
+  font-size: 21px;
+  font-weight: bold;
+  color: #16866a;
+  margin-bottom: 45px;
+}
+
+.brand-icon {
+  margin-right: 8px;
+}
+
+.menu-label {
+  font-size: 11px;
+  color: #94a39e;
+  margin-bottom: 15px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+nav a {
+  padding: 13px;
+  color: #61736c;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+nav a.active,
+nav a:hover {
+  background: #e9f7f1;
+  color: #16866a;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  color: #94a39e;
+  font-size: 12px;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  background: white;
+  padding: 20px 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e7eeeb;
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.topbar p {
+  margin: 6px 0 0;
+  color: #82918b;
+  font-size: 13px;
+}
+
+.location {
+  background: #e9f7f1;
+  color: #16866a;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.page-content {
+  padding: 30px;
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 75px;
+    padding: 15px 8px;
+  }
+
+  .brand {
+    font-size: 12px;
+    margin-bottom: 25px;
+  }
+
+  .brand-icon {
+    display: block;
+  }
+
+  nav a {
+    font-size: 0;
+    text-align: center;
+  }
+
+  .sidebar-footer,
+  .menu-label {
+    display: none;
+  }
+
+  .topbar {
+    padding: 15px;
+  }
+
+  .location {
+    font-size: 10px;
+  }
+
+  .page-content {
+    padding: 15px;
+  }
+}
