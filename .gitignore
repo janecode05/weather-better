@@ -68,3 +68,9 @@ Thumbs.db
 # IDE files
 .vscode/
 .idea/
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.angular/

@@ -1,1 +1,78 @@
-<p>ai-assistant works!</p>
+
+<div class="chat-container">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div>
+      <h2>AI Clean-Air Assistant</h2>
+      <p>Your personal guide to healthier air and safer family routines.</p>
+    </div>
+    <span class="status-badge">● AI Assistant</span>
+  </div>
+
+  <!-- Chat Messages -->
+  <div class="chat-messages">
+
+    @for (message of messages; track $index) {
+      <div class="message-row" [class.user-row]="message.role === 'user'">
+
+        <div class="message-avatar">
+          {{ message.role === 'user' ? 'You' : 'AI' }}
+        </div>
+
+        <div class="message-content"
+             [class.user-message]="message.role === 'user'">
+          {{ message.content }}
+        </div>
+
+      </div>
+    }
+
+    <!-- Loading Indicator -->
+    @if (isLoading) {
+      <div class="message-row">
+        <div class="message-avatar">AI</div>
+        <div class="message-content loading-message">
+          BreatheBetter is thinking...
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <!-- Suggested Questions -->
+  @if (messages.length === 1) {
+    <div class="suggestions">
+      <p>Try asking:</p>
+
+      @for (suggestion of suggestions; track suggestion) {
+        <button
+          type="button"
+          class="suggestion-button"
+          (click)="sendMessage(suggestion)">
+          {{ suggestion }}
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Message Input -->
+  <form class="chat-input-area" (ngSubmit)="sendMessage()">
+
+    <input
+      type="text"
+      name="userMessage"
+      [(ngModel)]="userMessage"
+      placeholder="Ask about air quality, pollution or family safety..."
+      [disabled]="isLoading"
+    />
+
+    <button
+      type="submit"
+      [disabled]="!userMessage.trim() || isLoading">
+      Send
+    </button>
+
+  </form>
+
+</div>
