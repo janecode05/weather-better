@@ -25,7 +25,7 @@ export class AiAssistant {
   messages: ChatMessage[] = [
     {
       role: 'assistant',
-      content: 'Hello! I am your BreatheBetter AI assistant. Ask me anything about air quality and protecting your family.'
+      content: 'Hello! I am your WeatherBetter AI assistant. Ask me anything about air quality and protecting your family.'
     }
   ];
 

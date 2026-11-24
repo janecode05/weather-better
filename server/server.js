@@ -33,11 +33,13 @@ app.get('/api/air-quality', (req, res) => {
   res.json(getAirQualityData());
 });
 
-// New Gemini chat endpoint
+
+
 app.post('/api/chat', async (req, res) => {
   try {
     const { message } = req.body;
 
+    // Validate user message
     if (!message || typeof message !== 'string' || !message.trim()) {
       return res.status(400).json({
         error: 'Please enter a message.'
@@ -46,90 +48,84 @@ app.post('/api/chat', async (req, res) => {
 
     if (message.length > 2000) {
       return res.status(400).json({
-        error: 'Message is too long. Please keep it under 2000 characters.'
+        error: 'Message is too long. Maximum 2000 characters.'
       });
     }
 
     const airQuality = getAirQualityData();
 
     const prompt = `
-You are BreathBetter, a friendly family-focused air quality assistant.
+      You are WeatherBetter, an AI air quality assistant.
 
-Your responsibilities:
-1. Help families understand air pollution.
-2. Suggest practical ways to reduce exposure.
-3. Give advice about children, elderly family members,
-   outdoor activities and indoor air quality.
-4. Use simple, supportive language.
-5. Never invent air-quality readings.
-6. Do not diagnose medical conditions or replace medical advice.
+      Help families understand pollution and protect their health.
+      Give simple, practical and family-friendly advice.
 
-CURRENT AIR QUALITY CONTEXT:
-${JSON.stringify(airQuality)}
+      Current air quality context:
+      ${JSON.stringify(airQuality)}
 
-IMPORTANT:
-These readings are demonstration data, not verified live measurements.
-Make that clear whenever you refer to them.
-Do not present them as current real-world conditions.
+      IMPORTANT:
+      These readings are demo data, not verified live measurements.
+      Never describe them as real-time readings.
 
-USER QUESTION:
-${message}
+      User question:
+      ${message}
+    `;
 
-Give a helpful, concise answer with practical actions.
-`;
+    let response;
 
-   
-let response;
-const maxRetries = 2;
+    // Retry temporary Gemini errors
+    const maxRetries = 2;
 
-for (let attempt = 0; attempt <= maxRetries; attempt++) {
-  try {
-    response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
-      contents: prompt
-    });
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        response = await ai.models.generateContent({
+          model: 'gemini-3.6-flash',
+          contents: prompt
+        });
 
-    break;
+        break;
 
-  } catch (error) {
-    const isTemporary =
-      error.status === 503 ||
-      error.status === 429 ||
-      error.status === 500;
+      } catch (error) {
+        const isTemporary =
+          error.status === 503 ||
+          error.status === 429 ||
+          error.status === 500;
 
-    if (!isTemporary || attempt === maxRetries) {
-      throw error;
+        if (!isTemporary || attempt === maxRetries) {
+          throw error;
+        }
+
+        const waitTime = 1000 * Math.pow(2, attempt);
+
+        console.log(
+          `Gemini temporarily unavailable. Retrying in ${waitTime / 1000} seconds...`
+        );
+
+        await new Promise(resolve =>
+          setTimeout(resolve, waitTime)
+        );
+      }
     }
 
-    const waitTime = 1000 * Math.pow(2, attempt);
-
-    console.log(
-      `Gemini temporarily unavailable. Retrying in ${waitTime / 1000}s...`
-    );
-
-    await new Promise(resolve =>
-      setTimeout(resolve, waitTime)
-    );
-  }
-}
-
-res.json({
-  reply: response.text
-});
-
-
-    res.json({
+    // Send exactly one successful response
+    return res.status(200).json({
       reply: response.text
     });
 
   } catch (error) {
     console.error('Gemini API error:', error.message);
 
-    res.status(500).json({
-      error: 'Sorry, the AI assistant could not respond. Please try again.'
+    // Avoid sending another response if headers were already sent
+    if (res.headersSent) {
+      return;
+    }
+
+    return res.status(500).json({
+      error: 'Sorry, the AI assistant is temporarily unavailable. Please try again.'
     });
   }
 });
+
 
 const PORT = 3000;
 
