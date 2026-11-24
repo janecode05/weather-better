@@ -42,3 +42,29 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+
+# Node dependencies
+**/node_modules/
+
+# Angular generated files
+**/dist/
+**/.angular/
+**/coverage/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
