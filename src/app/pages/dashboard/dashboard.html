@@ -1,23 +1,24 @@
 
-<div class="dashboard">
+<div class="dashboard" *ngIf="airQuality as data">
+
   <div class="welcome">
     <div>
       <h1>Good afternoon!</h1>
       <p>Here's your family's air quality update.</p>
     </div>
-    <span class="location">📍 Chennai, India</span>
+    <span class="location">📍 {{ data.city }}, India</span>
   </div>
 
   <section class="aqi-card">
     <div>
       <p class="eyebrow">CURRENT AIR QUALITY</p>
-      <h2>Good morning, Chennai!</h2>
-      <p>Air quality needs your attention today.</p>
+      <h2>Air quality update</h2>
+      <p>Here's what the current reading means.</p>
     </div>
 
     <div class="aqi-value">
-      <strong>156</strong>
-      <span>Moderate</span>
+      <strong>{{ data.aqi }}</strong>
+      <span>{{ data.status }}</span>
     </div>
   </section>
 
@@ -26,29 +27,23 @@
   <div class="stats-grid">
     <article class="stat-card">
       <span>🌡️ Temperature</span>
-      <h3>29°C</h3>
-      <p>Warm conditions</p>
+      <h3>{{ data.temperature }}°C</h3>
     </article>
 
     <article class="stat-card">
       <span>💧 Humidity</span>
-      <h3>68%</h3>
-      <p>Moderate humidity</p>
+      <h3>{{ data.humidity }}%</h3>
     </article>
 
     <article class="stat-card">
       <span>🌫️ PM2.5</span>
-      <h3>65 µg/m³</h3>
-      <p>Needs attention</p>
+      <h3>{{ data.pm25 }} µg/m³</h3>
     </article>
   </div>
 
   <section class="recommendation-card">
     <h2>💡 Your clean-air tip</h2>
-    <p>
-      Consider reducing strenuous outdoor activity today.
-      Keep windows closed during periods of high pollution.
-    </p>
+    <p>{{ data.recommendation }}</p>
   </section>
-</div>
 
+</div>

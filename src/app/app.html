@@ -1,64 +1,24 @@
 
-<div class="app-container">
+<div class="app-layout">
 
   <aside class="sidebar">
-
-    <div class="brand">
-      <span class="brand-icon">🌿</span>
-      <span>WeatherBetter</span>
-    </div>
-
-    <p class="menu-label">MENU</p>
+    <h2>WeatherBetter</h2>
 
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">
+      <a routerLink="/dashboard"
+         routerLinkActive="active">
         🏠 Dashboard
       </a>
 
-      <a routerLink="/air-quality" routerLinkActive="active">
-        🌫️ Air Quality
-      </a>
-
-      <a routerLink="/recommendations" routerLinkActive="active">
-        ✨ Recommendations
-      </a>
-
-      <a routerLink="/indoor-tips" routerLinkActive="active">
-        🏡 Indoor Air Tips
-      </a>
-
-      <a routerLink="/ai-assistant" routerLinkActive="active">
-        🤖 AI Assistant
-      </a>
-
-      <a routerLink="/action-planner" routerLinkActive="active">
-        📋 Action Planner
+      <a routerLink="/ai-assistant"
+         routerLinkActive="active">
+        ✨ AI Clean-Air Assistant
       </a>
     </nav>
-
-    <div class="sidebar-footer">
-      Breathe better. Live better.
-    </div>
-
   </aside>
 
   <main class="main-content">
-
-    <header class="topbar">
-      <div>
-        <h2>Good day! 🌱</h2>
-        <p>Your family's clean-air companion</p>
-      </div>
-
-      <div class="location">
-        📍 Chennai, India
-      </div>
-    </header>
-
-    <section class="page-content">
-      <router-outlet></router-outlet>
-    </section>
-
+    <router-outlet></router-outlet>
   </main>
 
 </div>

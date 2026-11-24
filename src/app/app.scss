@@ -1,131 +1,69 @@
 
-.app-container {
-  display: flex;
+:host {
+  display: block;
   min-height: 100vh;
 }
 
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .sidebar {
-  width: 250px;
+  width: 240px;
+  min-width: 240px;
+  min-height: 100vh;
+  padding: 24px 16px;
   background: #ffffff;
-  padding: 28px 18px;
+  border-right: 1px solid #e5ebe7;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  margin: 8px 0 20px;
+  color: #24332e;
+}
+
+.sidebar nav {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #e7eeeb;
+  gap: 8px;
 }
 
-.brand {
-  font-size: 21px;
-  font-weight: bold;
-  color: #16866a;
-  margin-bottom: 45px;
-}
-
-.brand-icon {
-  margin-right: 8px;
-}
-
-.menu-label {
-  font-size: 11px;
-  color: #94a39e;
-  margin-bottom: 15px;
-}
-
-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-nav a {
-  padding: 13px;
-  color: #61736c;
+.sidebar a {
+  display: block;
+  padding: 12px;
   border-radius: 9px;
-  font-size: 14px;
+  color: #53645c;
+  text-decoration: none;
 }
 
-nav a.active,
-nav a:hover {
-  background: #e9f7f1;
-  color: #16866a;
-}
-
-.sidebar-footer {
-  margin-top: auto;
-  color: #94a39e;
-  font-size: 12px;
+.sidebar a.active {
+  background: #e7f4ec;
+  color: #176b46;
 }
 
 .main-content {
   flex: 1;
   min-width: 0;
-}
-
-.topbar {
-  background: white;
-  padding: 20px 35px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e7eeeb;
-}
-
-.topbar h2 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.topbar p {
-  margin: 6px 0 0;
-  color: #82918b;
-  font-size: 13px;
-}
-
-.location {
-  background: #e9f7f1;
-  color: #16866a;
-  padding: 10px 15px;
-  border-radius: 20px;
-  font-size: 13px;
-}
-
-.page-content {
-  padding: 30px;
+  padding: 28px;
+  box-sizing: border-box;
+  background: #f4f8f6;
 }
 
 @media (max-width: 700px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
   .sidebar {
-    width: 75px;
-    padding: 15px 8px;
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
   }
 
-  .brand {
-    font-size: 12px;
-    margin-bottom: 25px;
-  }
-
-  .brand-icon {
-    display: block;
-  }
-
-  nav a {
-    font-size: 0;
-    text-align: center;
-  }
-
-  .sidebar-footer,
-  .menu-label {
-    display: none;
-  }
-
-  .topbar {
-    padding: 15px;
-  }
-
-  .location {
-    font-size: 10px;
-  }
-
-  .page-content {
-    padding: 15px;
+  .main-content {
+    padding: 16px;
   }
 }
