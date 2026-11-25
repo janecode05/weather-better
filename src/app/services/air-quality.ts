@@ -15,7 +15,7 @@ export class AirQualityService {
 
    private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/api/air-quality';
+  private apiUrl = 'http://localhost:3000/api/airquality';
   private apichatUrl = 'http://localhost:3000/api/chat';
 
   getAirQuality(): Observable<AirQuality> {

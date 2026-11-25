@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { AirQualityService } from '../../services/air-quality';
 import { AirQuality } from '../../model/air-quality.model';
 import {CommonModule} from "@angular/common";
@@ -15,11 +15,12 @@ export class Dashboard implements OnInit {
 
   private airQualityService = inject(AirQualityService);
 
-  airQuality: AirQuality | null = null;
+  readonly airQuality = signal<AirQuality | null>(null);
 
   ngOnInit(): void {
-    this.airQualityService.getAirQuality().subscribe(data => {
-      this.airQuality = data;
-    });
+    this.airQualityService.getAirQuality().subscribe({
+    next: data => this.airQuality.set(data),
+    error: error => console.error('Failed to load dashboard data', error),
+});
   }
 }
