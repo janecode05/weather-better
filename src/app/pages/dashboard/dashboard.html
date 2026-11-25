@@ -1,4 +1,17 @@
 
+@if (loading && !airQuality) {
+  <div class="dashboard-message">
+    Loading air-quality data...
+  </div>
+}
+
+@if (errorMessage && !airQuality) {
+  <div class="dashboard-error">
+    {{ errorMessage }}
+  </div>
+}
+
+
 <div class="dashboard" *ngIf="airQuality() as data">
 
   <div class="welcome">
@@ -35,5 +48,11 @@
       <span>🌫️ PM2.5</span>
       <h3>{{ data.pm25 }} µg/m³</h3>
     </article>
+
+    <article class="stat-card">
+      <span>🌫️ PM10</span>
+      <h3>{{ data.pm10 }} µg/m³</h3>
+    </article>
+    
   </div>
 </div>

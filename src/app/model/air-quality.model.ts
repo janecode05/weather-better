@@ -1,4 +1,5 @@
 
+
 export interface AirQuality {
   city: string;
   aqi: number;
@@ -6,5 +7,8 @@ export interface AirQuality {
   temperature: number;
   humidity: number;
   pm25: number;
-  recommendation: string;
+  pm10: number;
+  updatedAt: string;
+  source: string;
 }
+
