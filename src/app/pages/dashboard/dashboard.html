@@ -2,10 +2,6 @@
 <div class="dashboard" *ngIf="airQuality() as data">
 
   <div class="welcome">
-    <div>
-      <h1>Good afternoon!</h1>
-      <p>Here's your family's air quality update.</p>
-    </div>
     <span class="location">📍 {{ data.city }}, India</span>
   </div>
 
@@ -40,10 +36,4 @@
       <h3>{{ data.pm25 }} µg/m³</h3>
     </article>
   </div>
-
-  <section class="recommendation-card">
-    <h2>💡 Your clean-air tip</h2>
-    <p>{{ data.recommendation }}</p>
-  </section>
-
 </div>

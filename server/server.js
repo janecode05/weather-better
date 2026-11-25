@@ -19,21 +19,89 @@ const ai = new GoogleGenAI({
 });
 const PORT = 3000;
 
-function getAirQualityData() {
+
+async function getAirQualityData() {
+  const latitude = 13.0827;
+  const longitude = 80.2707;
+
+  const airQualityUrl =
+    `https://air-quality-api.open-meteo.com/v1/air-quality` +
+    `?latitude=${latitude}` +
+    `&longitude=${longitude}` +
+    `&current=us_aqi,pm2_5,pm10` +
+    `&timezone=Asia%2FKolkata`;
+
+  const weatherUrl =
+    `https://api.open-meteo.com/v1/forecast` +
+    `?latitude=${latitude}` +
+    `&longitude=${longitude}` +
+    `&current=temperature_2m,relative_humidity_2m` +
+    `&timezone=Asia%2FKolkata`;
+
+  const [airQualityResponse, weatherResponse] =
+    await Promise.all([
+      fetch(airQualityUrl),
+      fetch(weatherUrl)
+    ]);
+
+  if (!airQualityResponse.ok || !weatherResponse.ok) {
+    throw new Error('Unable to fetch live air-quality data');
+  }
+
+  const airQualityData = await airQualityResponse.json();
+  const weatherData = await weatherResponse.json();
+
+  const currentAir = airQualityData.current;
+  const currentWeather = weatherData.current;
+
+  const aqi = currentAir.us_aqi;
+
+  let status;
+
+  if (aqi <= 50) {
+    status = 'Good';
+  } else if (aqi <= 100) {
+    status = 'Moderate';
+  } else if (aqi <= 150) {
+    status = 'Unhealthy for Sensitive Groups';
+  } else if (aqi <= 200) {
+    status = 'Unhealthy';
+  } else if (aqi <= 300) {
+    status = 'Very Unhealthy';
+  } else {
+    status = 'Hazardous';
+  }
+
   return {
     city: 'Chennai',
-    aqi: 100,
-    status: 'Moderate',
-    temperature: 29,
-    humidity: 68,
-    pm25: 65
+    aqi: aqi,
+    status: status,
+    temperature: currentWeather.temperature_2m,
+    humidity: currentWeather.relative_humidity_2m,
+    pm25: currentAir.pm2_5,
+    pm10: currentAir.pm10,
+    updatedAt: currentAir.time,
+    source: 'Open-Meteo'
   };
 }
 
-app.get('/api/airquality', (req, res) => {
-  res.set('Cache-Control', 'no-store');
-  res.json(getAirQualityData());
+
+
+app.get('/api/airquality', async (req, res) => {
+  try {
+    const data = await getAirQualityData();
+
+    return res.json(data);
+
+  } catch (error) {
+    console.error('Air quality API error:', error.message);
+
+    return res.status(502).json({
+      error: 'Unable to retrieve air-quality data right now.'
+    });
+  }
 });
+
 
 
 app.post('/api/chat', async (req, res) => {
@@ -50,7 +118,7 @@ app.post('/api/chat', async (req, res) => {
         error: 'Message is too long. Maximum 2000 characters.'
       });
     }
-    const airQuality = getAirQualityData();
+    const airQuality = await getAirQualityData();
     const prompt = ` You are WeatherBetter, an AI air quality assistant. Current air quality context:
       ${JSON.stringify(airQuality)}
       IMPORTANT:
