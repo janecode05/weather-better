@@ -1,59 +1,82 @@
 # WeatherBetter
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.3.0.
+WeatherBetter is a web app for checking current air quality and weather conditions in Chennai, India, and getting practical clean-air guidance from an AI assistant.
 
-## Development server
+**Live app:** [frontendweatherbetter.vercel.app/dashboard](https://frontendweatherbetter.vercel.app/dashboard)
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **Air-quality dashboard:** View the current US AQI and its category, PM2.5 and PM10 levels, temperature, and humidity.
+- **AI clean-air assistant:** Ask questions about air quality, outdoor activity, indoor air, and ways to protect your family. Suggested questions are available to get started.
+- **Current data:** The backend retrieves air-quality and weather readings from [Open-Meteo](https://open-meteo.com/).
+- **Client-routed app:** Navigate between the dashboard and AI assistant.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Technology
 
-## Code scaffolding
+- **Frontend:** Angular 22, TypeScript, and SCSS
+- **Backend:** Node.js and Express
+- **AI:** Google Gemini API (`@google/genai`)
+- **Weather and air-quality data:** Open-Meteo APIs
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Run locally
 
-```bash
-ng generate component component-name
-```
+### Requirements
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Node.js and npm
+- A Google Gemini API key to use the AI assistant
 
-```bash
-ng generate --help
-```
+### 1. Start the backend
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+In a terminal:
 
 ```bash
-ng test
+cd server
+npm install
 ```
 
-## Running end-to-end tests
+Create `server/.env` and add your Gemini API key:
 
-For end-to-end (e2e) testing, run:
+```env
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Start the API server:
 
 ```bash
-ng e2e
+node server.js
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The backend listens at `http://localhost:3000`.
 
-## Additional Resources
+### 2. Start the Angular app
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+In a second terminal, from the project root:
+
+```bash
+npm install
+npm start
+```
+
+Open [http://localhost:4200](http://localhost:4200). The default route redirects to the dashboard. The frontend calls the backend at `http://localhost:3000`.
+
+## API endpoints
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/airquality` | Returns current air-quality and weather readings for Chennai. |
+| `POST` | `/api/chat` | Sends an air-quality question to the AI assistant. Expects a JSON body such as `{ "message": "Is it safe to exercise outdoors today?" }`. |
+
+## Build and tests
+
+From the project root:
+
+```bash
+npm run build
+npm test
+```
+
+## Deployment
+
+The frontend is deployed at [https://frontendweatherbetter.vercel.app/dashboard](https://frontendweatherbetter.vercel.app/dashboard).
+
+The frontend currently sends API requests to `http://localhost:3000`. To use the API from a hosted frontend, deploy the backend separately and configure the frontend API URLs in `src/app/services/air-quality.ts` to point to that backend. Configure the backend's `GEMINI_API_KEY` as a server-side environment variable, and allow requests from the deployed frontend origin.
