@@ -78,5 +78,4 @@ npm test
 ## Deployment
 
 The frontend is deployed at [https://frontendweatherbetter.vercel.app/dashboard](https://frontendweatherbetter.vercel.app/dashboard).
-
-The frontend currently sends API requests to `http://localhost:3000`. To use the API from a hosted frontend, deploy the backend separately and configure the frontend API URLs in `src/app/services/air-quality.ts` to point to that backend. Configure the backend's `GEMINI_API_KEY` as a server-side environment variable, and allow requests from the deployed frontend origin.
+The backend is deployed at [https://backendweatherbetter.vercel.app/](https://backendweatherbetter.vercel.app/).
