@@ -20,6 +20,7 @@ const ai = new GoogleGenAI({
 const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   'http://localhost:4200',  
+  'https://frontendweatherbetter.vercel.app/dashboard',
 ];
 
 app.use(cors({
