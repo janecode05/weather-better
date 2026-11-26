@@ -18,14 +18,8 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
 const PORT = process.env.PORT || 3000;
-const allowedOrigins = [
-  'http://localhost:4200',  
-  'https://frontendweatherbetter.vercel.app/dashboard',
-];
 
-app.use(cors({
-  origin: allowedOrigins
-}));
+app.use(cors());
 
 
 async function getAirQualityData() {
