@@ -6,7 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const { GoogleGenAI } = require('@google/genai');
 const app = express();
-app.use(cors());
+
 app.use(express.json());
 app.set('etag', false);
 
@@ -17,7 +17,14 @@ if (!process.env.GEMINI_API_KEY) {
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const allowedOrigins = [
+  'http://localhost:4200',  
+];
+
+app.use(cors({
+  origin: allowedOrigins
+}));
 
 
 async function getAirQualityData() {
@@ -169,6 +176,6 @@ app.post('/api/chat', async (req, res) => {
 
 
 
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });

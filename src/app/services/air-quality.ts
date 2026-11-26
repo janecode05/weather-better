@@ -1,8 +1,9 @@
-
+import { environment } from '../../environment/environment';
 import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AirQuality } from '../model/air-quality.model';
 import { HttpClient } from '@angular/common/http';
+
 
 interface ChatResponse {
   reply: string;
@@ -13,10 +14,10 @@ interface ChatResponse {
 })
 export class AirQualityService {
 
-   private http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/api/airquality';
-  private apichatUrl = 'http://localhost:3000/api/chat';
+  private apiUrl = environment.apiUrl + '/airquality';
+  private apichatUrl = environment.apiUrl + '/chat';
 
   getAirQuality(): Observable<AirQuality> {
     return this.http.get<AirQuality>(this.apiUrl);
